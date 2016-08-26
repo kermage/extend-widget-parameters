@@ -26,6 +26,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             
             add_action( 'in_widget_form', array( $this, 'add_extra_fields' ), 10, 3 );
             add_filter( 'widget_update_callback', array( $this, 'save_extra_fields' ), 10, 4 );
+            add_filter( 'dynamic_sidebar_params', array( $this, 'apply_extra_fields' ) );
             
         }
         
@@ -67,6 +68,28 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             );
             
             return $instance;
+            
+        }
+        
+        
+        public static function apply_extra_fields( $params ) {
+            
+            global $wp_registered_widgets;
+            
+            $widget_id  = $params[0]['widget_id'];
+            $widget_options = get_option( $wp_registered_widgets[$widget_id]['callback'][0]->option_name );
+            $widget_num = $wp_registered_widgets[ $widget_id ]['params'][0]['number'];
+            $instance = $widget_options[ $widget_num ];
+            
+            if ( ! empty( $instance['widget-id'] ) ) {
+                $params[0]['before_widget'] = preg_replace( '/id="[^"]+"/', 'id="' . $instance['widget-id'] . '"', $params[0]['before_widget'] );
+            }
+            
+            if ( ! empty( $instance['widget-class'] ) ) {
+                $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+            }
+            
+            return $params;
             
         }
         
