@@ -25,6 +25,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         private function __construct() {
             
             add_action( 'in_widget_form', array( $this, 'add_extra_fields' ), 10, 3 );
+            add_filter( 'widget_update_callback', array( $this, 'save_extra_fields' ), 10, 4 );
             
         }
         
@@ -45,6 +46,28 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             </p>
             
             <?php
+        }
+        
+        
+        public static function save_extra_fields( $instance, $new_instance, $old_instance, $widget ) {
+            
+            $instance['widget-id'] = apply_filters(
+                'widget_attribute_id',
+                sanitize_html_class( $new_instance['widget-id'] )
+            );
+            $instance['widget-class'] = apply_filters(
+                'widget_attribute_classes',
+                implode(
+                    ' ',
+                    array_map(
+                        'sanitize_html_class',
+                        explode( ' ', $new_instance['widget-class'] )
+                    )
+                )
+            );
+            
+            return $instance;
+            
         }
         
     }
