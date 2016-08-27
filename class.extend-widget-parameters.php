@@ -33,7 +33,8 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public static function add_extra_fields( $widget, $return, $instance ) {
             
-            $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '' ) );
+            $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '' ) );
+            $wraptags = array ( 'div', 'section' );
             ?>
             
             <p>
@@ -44,6 +45,15 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             <p>
                 <label for="<?php echo $widget->get_field_id( 'widget-class' ); ?>"><?php _e( 'Class', 'ewp' ); ?>:</label>
                 <input class="widefat" id="<?php echo $widget->get_field_id( 'widget-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-class' ); ?>" type="text" value="<?php echo $instance['widget-class']; ?>" />
+            </p>
+            
+            <p>
+                <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-wrap' ); ?>" name="<?php echo $widget->get_field_name( 'widget-wrap' ); ?>">
+                    <option value="0"><?php _e( '&mdash; Select Wrap Tag &mdash;' ); ?></option>
+                    <?php foreach ( $wraptags as $wraptag ) : ?>
+                        <option value="<?php echo $wraptag; ?>" <?php selected( $instance['widget-wrap'], $wraptag ); ?>><?php echo $wraptag; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </p>
             
             <?php
@@ -66,6 +76,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                     )
                 )
             );
+            $instance['widget-wrap'] = $new_instance['widget-wrap'];
             
             return $instance;
             
@@ -87,6 +98,12 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             
             if ( ! empty( $instance['widget-class'] ) ) {
                 $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+            }
+            
+            if ( ! empty( $instance['widget-wrap'] ) ) {
+                preg_match( '/<\/([^>]+)>/', $params[0]['after_widget'], $def_wrap );
+                $params[0]['before_widget'] = str_replace( $def_wrap[1], $instance['widget-wrap'], $params[0]['before_widget'] );
+                $params[0]['after_widget'] = '</' . $instance['widget-wrap'] . '>';
             }
             
             return $params;
