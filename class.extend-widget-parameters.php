@@ -34,6 +34,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         public static function add_extra_fields( $widget, $return, $instance ) {
             
             $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '', 'widget-title' => '' ) );
+            $overwriteclass = isset( $instance['widget-overwrite-class'] ) ? $instance['widget-overwrite-class'] : 0;
             $wraptags = array ( 'div', 'section' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
             ?>
@@ -46,6 +47,11 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             <p>
                 <label for="<?php echo $widget->get_field_id( 'widget-class' ); ?>"><?php _e( 'Class', 'ewp' ); ?>:</label>
                 <input class="widefat" id="<?php echo $widget->get_field_id( 'widget-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-class' ); ?>" type="text" value="<?php echo $instance['widget-class']; ?>" />
+            </p>
+            
+            <p>
+                <input id="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-overwrite-class' ); ?>" type="checkbox"<?php checked( $overwriteclass ); ?> />
+                <label for="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>"><?php _e( 'Overwrite Class', 'ewp' ); ?></label>
             </p>
             
             <p>
@@ -84,6 +90,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                     )
                 )
             );
+            $instance['widget-overwrite-class'] = ! empty( $new_instance['widget-overwrite-class'] );
             $instance['widget-wrap'] = $new_instance['widget-wrap'];
             $instance['widget-title'] = $new_instance['widget-title'];
             
@@ -106,7 +113,11 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             }
             
             if ( ! empty( $instance['widget-class'] ) ) {
-                $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+                if ( ! empty( $instance['widget-overwrite-class'] ) ) {
+                    $params[0]['before_widget'] = preg_replace( '/class="[^"]+"/', 'class="' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+                } else {
+                    $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+                }
             }
             
             if ( ! empty( $instance['widget-wrap'] ) ) {
