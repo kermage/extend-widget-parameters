@@ -37,8 +37,8 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '', 'widget-title' => '' ) );
             $overwriteclass = isset( $instance['widget-overwrite-class'] ) ? $instance['widget-overwrite-class'] : 0;
             $hidetitle = isset( $instance['widget-hide-title'] ) ? $instance['widget-hide-title'] : 0;
-            $wraptags = array ( 'div', 'section' );
-            $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
+            $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
+            $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
             
             <p>
