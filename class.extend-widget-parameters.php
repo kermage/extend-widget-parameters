@@ -27,6 +27,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             add_action( 'in_widget_form', array( $this, 'add_extra_fields' ), 10, 3 );
             add_filter( 'widget_update_callback', array( $this, 'save_extra_fields' ), 10, 4 );
             add_filter( 'dynamic_sidebar_params', array( $this, 'apply_extra_fields' ) );
+            add_filter( 'widget_title', array( $this, 'hide_widget_title' ), 10, 2 );
             
         }
         
@@ -35,6 +36,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             
             $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '', 'widget-title' => '' ) );
             $overwriteclass = isset( $instance['widget-overwrite-class'] ) ? $instance['widget-overwrite-class'] : 0;
+            $hidetitle = isset( $instance['widget-hide-title'] ) ? $instance['widget-hide-title'] : 0;
             $wraptags = array ( 'div', 'section' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
             ?>
@@ -52,6 +54,8 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             <p>
                 <input id="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-overwrite-class' ); ?>" type="checkbox"<?php checked( $overwriteclass ); ?> />
                 <label for="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>"><?php _e( 'Overwrite Class', 'ewp' ); ?></label>
+                <input id="<?php echo $widget->get_field_id( 'widget-hide-title' ); ?>" name="<?php echo $widget->get_field_name( 'widget-hide-title' ); ?>" type="checkbox"<?php checked( $hidetitle ); ?> />
+                <label for="<?php echo $widget->get_field_id( 'widget-hide-title' ); ?>"><?php _e( 'Hide Title', 'ewp' ); ?></label>
             </p>
             
             <p>
@@ -91,6 +95,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                 )
             );
             $instance['widget-overwrite-class'] = ! empty( $new_instance['widget-overwrite-class'] );
+            $instance['widget-hide-title'] = ! empty( $new_instance['widget-hide-title'] );
             $instance['widget-wrap'] = $new_instance['widget-wrap'];
             $instance['widget-title'] = $new_instance['widget-title'];
             
@@ -134,6 +139,16 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             
             return $params;
             
+        }
+        
+        
+        public function hide_widget_title( $title, $instance ) {
+            
+            if ( ! empty( $instance['widget-hide-title'] ) ) {
+                $title = '';
+            }
+            
+            return $title;
         }
         
     }
