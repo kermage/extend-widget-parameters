@@ -33,8 +33,9 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public static function add_extra_fields( $widget, $return, $instance ) {
             
-            $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '' ) );
+            $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '', 'widget-title' => '' ) );
             $wraptags = array ( 'div', 'section' );
+            $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
             ?>
             
             <p>
@@ -52,6 +53,12 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                     <option value="0"><?php _e( '&mdash; Select Wrap Tag &mdash;' ); ?></option>
                     <?php foreach ( $wraptags as $wraptag ) : ?>
                         <option value="<?php echo $wraptag; ?>" <?php selected( $instance['widget-wrap'], $wraptag ); ?>><?php echo $wraptag; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-title' ); ?>" name="<?php echo $widget->get_field_name( 'widget-title' ); ?>">
+                    <option value="0"><?php _e( '&mdash; Select Title Tag &mdash;' ); ?></option>
+                    <?php foreach ( $titletags as $titletag ) : ?>
+                        <option value="<?php echo $titletag; ?>" <?php selected( $instance['widget-title'], $titletag ); ?>><?php echo $titletag; ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>
@@ -77,6 +84,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                 )
             );
             $instance['widget-wrap'] = $new_instance['widget-wrap'];
+            $instance['widget-title'] = $new_instance['widget-title'];
             
             return $instance;
             
@@ -104,6 +112,12 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                 preg_match( '/<\/([^>]+)>/', $params[0]['after_widget'], $def_wrap );
                 $params[0]['before_widget'] = str_replace( $def_wrap[1], $instance['widget-wrap'], $params[0]['before_widget'] );
                 $params[0]['after_widget'] = '</' . $instance['widget-wrap'] . '>';
+            }
+            
+            if ( ! empty( $instance['widget-title'] ) ) {
+                preg_match( '/<\/([^>]+)>/', $params[0]['after_title'], $def_tag );
+                $params[0]['before_title'] = str_replace( $def_tag[1], $instance['widget-title'], $params[0]['before_title'] );
+                $params[0]['after_title'] = '</' . $instance['widget-title'] . '>';
             }
             
             return $params;
