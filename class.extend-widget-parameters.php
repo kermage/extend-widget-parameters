@@ -34,42 +34,46 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public static function add_extra_fields( $widget, $return, $instance ) {
             
-            $instance = wp_parse_args( (array) $instance, array( 'widget-id' => '', 'widget-class' => '', 'widget-wrap' => '', 'widget-title' => '' ) );
-            $overwriteclass = isset( $instance['widget-overwrite-class'] ) ? $instance['widget-overwrite-class'] : 0;
-            $hidetitle = isset( $instance['widget-hide-title'] ) ? $instance['widget-hide-title'] : 0;
+            $instance = wp_parse_args( (array) $instance, array( 'ewp' => array(
+                            'atts' => array( 'id' => '', 'class' => '' ),
+                            'tags' => array( 'wrap' => '', 'title' => '' ),
+                            'opts' => array( 'overwrite_class' => '', 'hide_title' => '' )
+                        ) ) );
+            $overwrite_class = isset( $instance['ewp']['opts']['overwrite_class'] ) ? $instance['ewp']['opts']['overwrite_class'] : 0;
+            $hide_title = isset( $instance['ewp']['opts']['hide_title'] ) ? $instance['ewp']['opts']['hide_title'] : 0;
             $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
             
             <p>
-                <label for="<?php echo $widget->get_field_id( 'widget-id' ); ?>"><?php _e( 'ID', 'ewp' ); ?>:</label>
-                <input class="widefat" id="<?php echo $widget->get_field_id( 'widget-id' ); ?>" name="<?php echo $widget->get_field_name( 'widget-id' ); ?>" type="text" value="<?php echo $instance['widget-id']; ?>" />
+                <label for="<?php echo $widget->get_field_id( 'ewp-atts-id' ); ?>"><?php _e( 'ID', 'ewp' ); ?>:</label>
+                <input class="widefat" id="<?php echo $widget->get_field_id( 'ewp-atts-id' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[atts][id]' ); ?>" type="text" value="<?php echo $instance['ewp']['atts']['id']; ?>" />
             </p>
             
             <p>
-                <label for="<?php echo $widget->get_field_id( 'widget-class' ); ?>"><?php _e( 'Class', 'ewp' ); ?>:</label>
-                <input class="widefat" id="<?php echo $widget->get_field_id( 'widget-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-class' ); ?>" type="text" value="<?php echo $instance['widget-class']; ?>" />
+                <label for="<?php echo $widget->get_field_id( 'ewp-atts-class' ); ?>"><?php _e( 'Class', 'ewp' ); ?>:</label>
+                <input class="widefat" id="<?php echo $widget->get_field_id( 'ewp-atts-class' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[atts][class]' ); ?>" type="text" value="<?php echo $instance['ewp']['atts']['class']; ?>" />
             </p>
             
             <p>
-                <input id="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>" name="<?php echo $widget->get_field_name( 'widget-overwrite-class' ); ?>" type="checkbox"<?php checked( $overwriteclass ); ?> />
-                <label for="<?php echo $widget->get_field_id( 'widget-overwrite-class' ); ?>"><?php _e( 'Overwrite Class', 'ewp' ); ?></label>
-                <input id="<?php echo $widget->get_field_id( 'widget-hide-title' ); ?>" name="<?php echo $widget->get_field_name( 'widget-hide-title' ); ?>" type="checkbox"<?php checked( $hidetitle ); ?> />
-                <label for="<?php echo $widget->get_field_id( 'widget-hide-title' ); ?>"><?php _e( 'Hide Title', 'ewp' ); ?></label>
+                <input id="<?php echo $widget->get_field_id( 'ewp-opts-overwrite_class' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][overwrite_class]' ); ?>" type="checkbox"<?php checked( $overwrite_class ); ?> />
+                <label for="<?php echo $widget->get_field_id( 'ewp-opts-overwrite_class' ); ?>"><?php _e( 'Overwrite Class', 'ewp' ); ?></label>
+                <input id="<?php echo $widget->get_field_id( 'ewp-opts-hide_title' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][hide_title]' ); ?>" type="checkbox"<?php checked( $hide_title ); ?> />
+                <label for="<?php echo $widget->get_field_id( 'ewp-opts-hide_title' ); ?>"><?php _e( 'Hide Title', 'ewp' ); ?></label>
             </p>
             
             <p>
                 <label><?php _e( 'Tags', 'ewp' ); ?>:</label>
-                <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-wrap' ); ?>" name="<?php echo $widget->get_field_name( 'widget-wrap' ); ?>">
+                <select class="widefat" id="<?php echo $widget->get_field_id( 'ewp-tags-wrap' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[tags][wrap]' ); ?>">
                     <option value="0"><?php _e( '&mdash; Select Wrap Tag &mdash;', 'ewp' ); ?></option>
                     <?php foreach ( $wraptags as $wraptag ) : ?>
-                        <option value="<?php echo $wraptag; ?>" <?php selected( $instance['widget-wrap'], $wraptag ); ?>><?php echo $wraptag; ?></option>
+                        <option value="<?php echo $wraptag; ?>" <?php selected( $instance['ewp']['tags']['wrap'], $wraptag ); ?>><?php echo $wraptag; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-title' ); ?>" name="<?php echo $widget->get_field_name( 'widget-title' ); ?>">
+                <select class="widefat" id="<?php echo $widget->get_field_id( 'ewp-tags-title' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[tags][title]' ); ?>"">
                     <option value="0"><?php _e( '&mdash; Select Title Tag &mdash;', 'ewp' ); ?></option>
                     <?php foreach ( $titletags as $titletag ) : ?>
-                        <option value="<?php echo $titletag; ?>" <?php selected( $instance['widget-title'], $titletag ); ?>><?php echo $titletag; ?></option>
+                        <option value="<?php echo $titletag; ?>" <?php selected( $instance['ewp']['tags']['title'], $titletag ); ?>><?php echo $titletag; ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>
@@ -80,24 +84,24 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public static function save_extra_fields( $instance, $new_instance, $old_instance, $widget ) {
             
-            $instance['widget-id'] = apply_filters(
+            $instance['ewp']['atts']['id'] = apply_filters(
                 'widget_attribute_id',
-                sanitize_html_class( $new_instance['widget-id'] )
+                sanitize_html_class( $new_instance['ewp']['atts']['id'] )
             );
-            $instance['widget-class'] = apply_filters(
+            $instance['ewp']['atts']['class'] = apply_filters(
                 'widget_attribute_classes',
                 implode(
                     ' ',
                     array_map(
                         'sanitize_html_class',
-                        explode( ' ', $new_instance['widget-class'] )
+                        explode( ' ', $new_instance['ewp']['atts']['class'] )
                     )
                 )
             );
-            $instance['widget-overwrite-class'] = ! empty( $new_instance['widget-overwrite-class'] );
-            $instance['widget-hide-title'] = ! empty( $new_instance['widget-hide-title'] );
-            $instance['widget-wrap'] = $new_instance['widget-wrap'];
-            $instance['widget-title'] = $new_instance['widget-title'];
+            $instance['ewp']['opts']['overwrite_class'] = ! empty( $new_instance['ewp']['opts']['overwrite_class'] );
+            $instance['ewp']['opts']['hide_title'] = ! empty( $new_instance['ewp']['opts']['hide_title'] );
+            $instance['ewp']['tags']['wrap'] = $new_instance['ewp']['tags']['wrap'];
+            $instance['ewp']['tags']['title'] = $new_instance['ewp']['tags']['title'];
             
             return $instance;
             
@@ -113,28 +117,28 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             $widget_num = $wp_registered_widgets[ $widget_id ]['params'][0]['number'];
             $instance = $widget_options[ $widget_num ];
             
-            if ( ! empty( $instance['widget-id'] ) ) {
-                $params[0]['before_widget'] = preg_replace( '/id="[^"]+"/', 'id="' . $instance['widget-id'] . '"', $params[0]['before_widget'] );
+            if ( ! empty( $instance['ewp']['atts']['id'] ) ) {
+                $params[0]['before_widget'] = preg_replace( '/id="[^"]+"/', 'id="' . $instance['ewp']['atts']['id'] . '"', $params[0]['before_widget'] );
             }
             
-            if ( ! empty( $instance['widget-class'] ) ) {
-                if ( ! empty( $instance['widget-overwrite-class'] ) ) {
-                    $params[0]['before_widget'] = preg_replace( '/class="[^"]+"/', 'class="' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+            if ( ! empty( $instance['ewp']['atts']['class'] ) ) {
+                if ( ! empty( $instance['ewp']['opts']['overwrite_class'] ) ) {
+                    $params[0]['before_widget'] = preg_replace( '/class="[^"]+"/', 'class="' . $instance['ewp']['atts']['class'] . '"', $params[0]['before_widget'] );
                 } else {
-                    $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['widget-class'] . '"', $params[0]['before_widget'] );
+                    $params[0]['before_widget'] = preg_replace( '/class="([^"]+)"/', 'class="$1 ' . $instance['ewp']['atts']['class'] . '"', $params[0]['before_widget'] );
                 }
             }
             
-            if ( ! empty( $instance['widget-wrap'] ) ) {
+            if ( ! empty( $instance['ewp']['tags']['wrap'] ) ) {
                 preg_match( '/<\/([^>]+)>/', $params[0]['after_widget'], $def_wrap );
-                $params[0]['before_widget'] = str_replace( $def_wrap[1], $instance['widget-wrap'], $params[0]['before_widget'] );
-                $params[0]['after_widget'] = '</' . $instance['widget-wrap'] . '>';
+                $params[0]['before_widget'] = str_replace( $def_wrap[1], $instance['ewp']['tags']['wrap'], $params[0]['before_widget'] );
+                $params[0]['after_widget'] = '</' . $instance['ewp']['tags']['wrap'] . '>';
             }
             
-            if ( ! empty( $instance['widget-title'] ) ) {
+            if ( ! empty( $instance['ewp']['tags']['title'] ) ) {
                 preg_match( '/<\/([^>]+)>/', $params[0]['after_title'], $def_tag );
-                $params[0]['before_title'] = str_replace( $def_tag[1], $instance['widget-title'], $params[0]['before_title'] );
-                $params[0]['after_title'] = '</' . $instance['widget-title'] . '>';
+                $params[0]['before_title'] = str_replace( $def_tag[1], $instance['ewp']['tags']['title'], $params[0]['before_title'] );
+                $params[0]['after_title'] = '</' . $instance['ewp']['tags']['title'] . '>';
             }
             
             return $params;
@@ -144,7 +148,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public function hide_widget_title( $title, $instance ) {
             
-            if ( ! empty( $instance['widget-hide-title'] ) ) {
+            if ( ! empty( $instance['ewp']['opts']['hide_title'] ) ) {
                 $title = '';
             }
             
