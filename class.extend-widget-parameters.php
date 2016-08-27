@@ -49,14 +49,15 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             </p>
             
             <p>
+                <label><?php _e( 'Tags', 'ewp' ); ?>:</label>
                 <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-wrap' ); ?>" name="<?php echo $widget->get_field_name( 'widget-wrap' ); ?>">
-                    <option value="0"><?php _e( '&mdash; Select Wrap Tag &mdash;' ); ?></option>
+                    <option value="0"><?php _e( '&mdash; Select Wrap Tag &mdash;', 'ewp' ); ?></option>
                     <?php foreach ( $wraptags as $wraptag ) : ?>
                         <option value="<?php echo $wraptag; ?>" <?php selected( $instance['widget-wrap'], $wraptag ); ?>><?php echo $wraptag; ?></option>
                     <?php endforeach; ?>
                 </select>
                 <select class="widefat" id="<?php echo $widget->get_field_id( 'widget-title' ); ?>" name="<?php echo $widget->get_field_name( 'widget-title' ); ?>">
-                    <option value="0"><?php _e( '&mdash; Select Title Tag &mdash;' ); ?></option>
+                    <option value="0"><?php _e( '&mdash; Select Title Tag &mdash;', 'ewp' ); ?></option>
                     <?php foreach ( $titletags as $titletag ) : ?>
                         <option value="<?php echo $titletag; ?>" <?php selected( $instance['widget-title'], $titletag ); ?>><?php echo $titletag; ?></option>
                     <?php endforeach; ?>
