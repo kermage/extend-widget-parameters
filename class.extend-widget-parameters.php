@@ -28,6 +28,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             add_filter( 'widget_update_callback', array( $this, 'save_extra_fields' ), 10, 4 );
             add_filter( 'dynamic_sidebar_params', array( $this, 'apply_extra_fields' ) );
             add_filter( 'widget_title', array( $this, 'hide_widget_title' ), 10, 2 );
+            add_filter( 'widget_display_callback', array( $this, 'widget_display' ), 10, 3 );
             
         }
         
@@ -37,10 +38,11 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             $instance = wp_parse_args( (array) $instance, array( 'ewp' => array(
                             'atts' => array( 'id' => '', 'class' => '' ),
                             'tags' => array( 'wrap' => '', 'title' => '' ),
-                            'opts' => array( 'overwrite_class' => '', 'hide_title' => '' )
+                            'opts' => array( 'overwrite_class' => '', 'hide_title' => '', 'status' => '' )
                         ) ) );
             $overwrite_class = isset( $instance['ewp']['opts']['overwrite_class'] ) ? $instance['ewp']['opts']['overwrite_class'] : 0;
             $hide_title = isset( $instance['ewp']['opts']['hide_title'] ) ? $instance['ewp']['opts']['hide_title'] : 0;
+            // $status = isset( $instance['ewp']['opts']['status'] ) ? $instance['ewp']['opts']['status'] : 0;
             $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
@@ -78,6 +80,14 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                 </select>
             </p>
             
+            <p>
+                <label for="<?php echo $widget->get_field_id( 'ewp-opts-status' ); ?>"><?php _e( 'Status', 'ewp' ); ?>:</label>
+                <select class="widefat" id="<?php echo $widget->get_field_id( 'ewp-opts-status' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][status]' ); ?>">
+                    <option value="0" <?php selected( $instance['ewp']['opts']['status'], 0 ); ?>><?php _e( '&mdash; Published &mdash;', 'ewp' ); ?></option>
+                    <option value="1" <?php selected( $instance['ewp']['opts']['status'], 1 ); ?>><?php _e( '&mdash; Unpublished &mdash;', 'ewp' ); ?></option>
+                </select>
+            </p>
+            
             <?php
         }
         
@@ -100,6 +110,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             );
             $instance['ewp']['opts']['overwrite_class'] = ! empty( $new_instance['ewp']['opts']['overwrite_class'] );
             $instance['ewp']['opts']['hide_title'] = ! empty( $new_instance['ewp']['opts']['hide_title'] );
+            $instance['ewp']['opts']['status'] = $new_instance['ewp']['opts']['status'];
             $instance['ewp']['tags']['wrap'] = $new_instance['ewp']['tags']['wrap'];
             $instance['ewp']['tags']['title'] = $new_instance['ewp']['tags']['title'];
             
@@ -153,6 +164,17 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             }
             
             return $title;
+        }
+        
+        
+        public static function widget_display( $instance, $widget, $args ) {
+            
+            if ( ! empty( $instance['ewp']['opts']['status'] ) ) {
+                return false;
+            }
+            
+            return $instance;
+            
         }
         
     }
