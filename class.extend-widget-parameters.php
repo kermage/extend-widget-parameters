@@ -33,16 +33,13 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         }
         
         
-        public static function add_extra_fields( $widget, $return, $instance ) {
+        public function add_extra_fields( $widget, $return, $instance ) {
             
             $instance = wp_parse_args( (array) $instance, array( 'ewp' => array(
                             'atts' => array( 'id' => '', 'class' => '' ),
                             'tags' => array( 'wrap' => '', 'title' => '' ),
                             'opts' => array( 'overwrite_class' => '', 'hide_title' => '', 'status' => '' )
                         ) ) );
-            $overwrite_class = isset( $instance['ewp']['opts']['overwrite_class'] ) ? $instance['ewp']['opts']['overwrite_class'] : 0;
-            $hide_title = isset( $instance['ewp']['opts']['hide_title'] ) ? $instance['ewp']['opts']['hide_title'] : 0;
-            // $status = isset( $instance['ewp']['opts']['status'] ) ? $instance['ewp']['opts']['status'] : 0;
             $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
@@ -58,9 +55,9 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             </p>
             
             <p>
-                <input id="<?php echo $widget->get_field_id( 'ewp-opts-overwrite_class' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][overwrite_class]' ); ?>" type="checkbox"<?php checked( $overwrite_class ); ?> />
+                <input id="<?php echo $widget->get_field_id( 'ewp-opts-overwrite_class' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][overwrite_class]' ); ?>" type="checkbox"<?php checked( $instance['ewp']['opts']['overwrite_class'] ); ?> />
                 <label for="<?php echo $widget->get_field_id( 'ewp-opts-overwrite_class' ); ?>"><?php _e( 'Overwrite Class', 'ewp' ); ?></label>
-                <input id="<?php echo $widget->get_field_id( 'ewp-opts-hide_title' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][hide_title]' ); ?>" type="checkbox"<?php checked( $hide_title ); ?> />
+                <input id="<?php echo $widget->get_field_id( 'ewp-opts-hide_title' ); ?>" name="<?php echo $widget->get_field_name( 'ewp[opts][hide_title]' ); ?>" type="checkbox"<?php checked( $instance['ewp']['opts']['hide_title'] ); ?> />
                 <label for="<?php echo $widget->get_field_id( 'ewp-opts-hide_title' ); ?>"><?php _e( 'Hide Title', 'ewp' ); ?></label>
             </p>
             
@@ -92,7 +89,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         }
         
         
-        public static function save_extra_fields( $instance, $new_instance, $old_instance, $widget ) {
+        public function save_extra_fields( $instance, $new_instance, $old_instance, $widget ) {
             
             $instance['ewp']['atts']['id'] = apply_filters(
                 'widget_attribute_id',
@@ -119,7 +116,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         }
         
         
-        public static function apply_extra_fields( $params ) {
+        public function apply_extra_fields( $params ) {
             
             global $wp_registered_widgets;
             
@@ -167,7 +164,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         }
         
         
-        public static function widget_display( $instance, $widget, $args ) {
+        public function widget_display( $instance, $widget, $args ) {
             
             if ( ! empty( $instance['ewp']['opts']['status'] ) ) {
                 return false;
