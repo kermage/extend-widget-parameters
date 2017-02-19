@@ -4,9 +4,11 @@
  *  Licensed under GNU General Public License v2 or later.
  */
 
-.ewp {
-    position: absolute;
-    top: 0;
-    left: -260px;
-    width: 245px;
+@media screen and ( min-width: 601px ) {
+    body:not( .wp-customizer ) .ewp {
+        position: absolute;
+        top: 0;
+        left: -260px;
+        width: 245px;
+    }
 }
