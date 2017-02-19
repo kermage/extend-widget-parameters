@@ -29,6 +29,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             add_filter( 'dynamic_sidebar_params', array( $this, 'apply_extra_fields' ) );
             add_filter( 'widget_title', array( $this, 'hide_widget_title' ), 10, 2 );
             add_filter( 'widget_display_callback', array( $this, 'widget_display' ), 10, 3 );
+            add_action( 'load-widgets.php', array( $this, 'scripts_styles' ) );
             
         }
         
@@ -43,6 +44,10 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
+            
+            <div class="ewp">
+            <div class="widget-top"><div class="widget-title"><h3>Parameters</h3></div></div>
+            <div class="widget-inside" style="display: block;">
             
             <p>
                 <label for="<?php echo $widget->get_field_id( 'ewp-atts-id' ); ?>"><?php _e( 'ID', 'ewp' ); ?>:</label>
@@ -84,6 +89,9 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
                     <option value="1" <?php selected( $instance['ewp']['opts']['status'], 1 ); ?>><?php _e( '&mdash; Unpublished &mdash;', 'ewp' ); ?></option>
                 </select>
             </p>
+            
+            </div>
+            </div>
             
             <?php
         }
@@ -171,6 +179,13 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             }
             
             return $instance;
+            
+        }
+        
+        
+        public function scripts_styles() {
+            
+            wp_enqueue_style( 'ewp-css', EWP_URL . 'extend-widget-parameters.css', array(), EWP_VERSION, false );
             
         }
         

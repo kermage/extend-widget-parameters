@@ -1,0 +1,12 @@
+/*!
+ *  Extend Widget Parameters 0.1.0
+ *  Copyright (C) 2016 Gene Alyson Fortunado Torcende
+ *  Licensed under GNU General Public License v2 or later.
+ */
+
+.ewp {
+    position: absolute;
+    top: 0;
+    left: -260px;
+    width: 245px;
+}
