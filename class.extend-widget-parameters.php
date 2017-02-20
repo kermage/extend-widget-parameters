@@ -44,6 +44,8 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             $wraptags = array ( 'div', 'section', 'article', 'main', 'aside' );
             $titletags = array ( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div' );
             ?>
+
+            <a class="button-primary ewp-toggle" id="<?php echo $widget->get_field_id( 'ewp-toggle' ); ?>" href="#"><?php _e( 'Toggle Parameters', 'ewp' ); ?></a>
             
             <div class="ewp">
             <div class="widget-top"><div class="widget-title"><h3>Parameters</h3></div></div>
@@ -185,7 +187,9 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         
         public function scripts_styles() {
             
+            wp_enqueue_script( 'jquery-effects-slide' );
             wp_enqueue_style( 'ewp-css', EWP_URL . 'extend-widget-parameters.css', array(), EWP_VERSION, false );
+            wp_enqueue_script( 'ewp-js', EWP_URL . 'extend-widget-parameters.js', array( 'jquery-effects-slide' ), EWP_VERSION, true );
             
         }
         

@@ -12,3 +12,12 @@
         width: 245px;
     }
 }
+
+.ewp {
+    display: none;
+}
+
+.ewp-toggle {
+    width: 100%;
+    text-align: center;
+}
