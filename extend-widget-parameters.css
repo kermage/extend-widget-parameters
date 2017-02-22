@@ -10,6 +10,11 @@
         top: 0;
         left: -260px;
         width: 245px;
+        box-shadow: 0 0px 10px 5px rgba( 0, 0, 0, .05 );
+    }
+
+    body:not( .wp-customizer ) .ewp-top {
+        margin-top: 0;
     }
 }
 
@@ -26,9 +31,13 @@
     font-size: 1em;
     font-weight: 600;
     line-height: 1;
+
+    margin-top: 1em;
 }
 
-.ewp-toggle {
+.widget .ewp-toggle {
+    display: block;
+    margin: 1em 0;
     width: 100%;
     text-align: center;
 }
