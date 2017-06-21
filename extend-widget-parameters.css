@@ -41,3 +41,10 @@
     width: 100%;
     text-align: center;
 }
+
+.widget .ewp-clone {
+    display: block;
+    margin: 1em 0;
+    width: 100%;
+    text-align: center;
+}

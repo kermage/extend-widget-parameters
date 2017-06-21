@@ -22,4 +22,15 @@
 
     });
 
+    $( document ).on( 'click', 'a[id^="widget-"][id $="-ewp-clone"]', function( e ) {
+        e.preventDefault();
+
+        var $widget_original = $( this ).parents( '.widget' );
+        var $widget_clone = $widget_original.clone();
+
+        $widget_clone.insertAfter( $widget_original );
+        wpWidgets.save( $widget_clone, 0, 0, 1 );
+
+    });
+
 }(jQuery));

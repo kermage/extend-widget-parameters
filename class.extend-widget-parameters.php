@@ -46,6 +46,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
             ?>
 
             <a class="button-primary ewp-toggle" id="<?php echo $widget->get_field_id( 'ewp-toggle' ); ?>" href="#"><?php _e( 'Toggle Parameters', 'ewp' ); ?></a>
+            <a class="button ewp-clone" id="<?php echo $widget->get_field_id( 'ewp-clone' ); ?>" href="#"><?php _e( 'Clone', 'ewp' ); ?></a>
             
             <div class="ewp">
             <div class="ewp-top">Parameters</div>
