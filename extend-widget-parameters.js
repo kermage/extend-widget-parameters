@@ -12,7 +12,7 @@
     $( document ).on( 'click', 'a[id^="widget-"][id $="-ewp-toggle"]', function( e ) {
         e.preventDefault();
 
-        $thisEWP = $( this ).next( '.ewp' );
+        $thisEWP = $( this ).siblings( '.ewp' );
 
         if ( $( window ).outerWidth() <= 600 || $( 'body' ).hasClass( 'wp-customizer' ) ) {
             $thisEWP.toggleClass( 'active' ).toggle( 'slide', { direction: 'up' } );
