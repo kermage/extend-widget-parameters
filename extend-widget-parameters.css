@@ -35,13 +35,7 @@
     margin-top: 1em;
 }
 
-.widget .ewp-toggle {
-    display: block;
-    margin: 1em 0;
-    width: 100%;
-    text-align: center;
-}
-
+.widget .ewp-toggle,
 .widget .ewp-clone {
     display: block;
     margin: 1em 0;
