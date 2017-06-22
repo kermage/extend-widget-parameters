@@ -1,5 +1,5 @@
 /*!
- *  Extend Widget Parameters 0.1.0
+ *  Extend Widget Parameters 1.0.0
  *  Copyright (C) 2016 Gene Alyson Fortunado Torcende
  *  Licensed under GNU General Public License v2 or later.
  */

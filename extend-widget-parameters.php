@@ -10,7 +10,7 @@
  * Plugin URI:  https://github.com/kermage/extend-widget-parameters/
  * Author:      Gene Alyson Fortunado Torcende
  * Author URI:  mailto:genealyson.torcende@gmail.com
- * Description: Extend widgets with ability to add custom ID and classes, override widget wrap and title tags, and hide the title or the entire widget on the front end.
+ * Description: Extend widgets with ability to add custom ID and classes, override widget wrap and title tags, hide the title or the entire widget on the front end, and clone itself with all of its settings.
  * Version:     1.0.0
  * License:     GNU General Public License v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
