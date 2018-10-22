@@ -189,7 +189,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         public function scripts_styles() {
             
             wp_enqueue_script( 'jquery-effects-slide' );
-            wp_enqueue_style( 'ewp-css', EWP_URL . 'extend-widget-parameters.css', array(), EWP_VERSION, false );
+            wp_enqueue_style( 'ewp-css', EWP_URL . 'extend-widget-parameters.css', array(), EWP_VERSION );
             wp_enqueue_script( 'ewp-js', EWP_URL . 'extend-widget-parameters.js', array( 'jquery-effects-slide' ), EWP_VERSION, true );
             
         }
