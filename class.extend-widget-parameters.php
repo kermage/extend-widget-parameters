@@ -165,7 +165,7 @@ if ( ! class_exists( 'Extend_Widget_Parameters' ) ) {
         }
         
         
-        public function hide_widget_title( $title, $instance ) {
+        public function hide_widget_title( $title, $instance = array() ) {
             
             if ( ! empty( $instance['ewp']['opts']['hide_title'] ) ) {
                 $title = '';
